@@ -17,6 +17,12 @@ variable imagebuild {
   description = "Latest Image Build"
 }
 
+variable imagename {
+    type = "string"
+    default = ""
+    description = "Docker Image Name"
+}
+
 
 resource "azurerm_resource_group" "tf_test" {
     name = "tfmainrg"

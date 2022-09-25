@@ -57,7 +57,7 @@ stages:
 - stage: RemoveEnv
   condition: eq(variables['Build.Reason'], 'Manual')
   displayName: 'Removing environment with Terraform in Azure'
-  dependsOn: RunTerraform
+  dependsOn: Provision
   jobs:
   - job: Destroying
     displayName: 'Destroying the environment'

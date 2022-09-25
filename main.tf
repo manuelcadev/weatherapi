@@ -18,7 +18,7 @@ variable imagebuild {
 }
 
 variable imagename {
-    type = "string"
+    type = string
     default = ""
     description = "Docker Image Name"
 }

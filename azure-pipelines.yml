@@ -11,7 +11,7 @@ resources:
 variables:
   tag: '$(Build.BuildId)'
   imageName: 'manuelca/weatherapi'
-  envName: 'tfmainrg-'$(tag)
+  envName: 'tfmainrg-$(tag)'
 
 stages:
 - stage: Build

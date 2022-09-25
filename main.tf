@@ -2,15 +2,6 @@ provider "azurerm" {
     features {}
 }
 
-terraform {
-    backend "azurerm" {
-        resource_group_name = "tf_rg_blobstore"
-        storage_account_name = "tfstoragemanuelca"
-        container_name = "tfstate"
-        key = "terraform.tfstate"
-    }
-}
-
 variable imagebuild {
   type        = string
   default     = ""
@@ -23,14 +14,29 @@ variable imagename {
     description = "Docker Image Name"
 }
 
+variable envname {
+  type        = string
+  default     = ""
+  description = "Environment unique name"
+}
+
+
+terraform {
+    backend "azurerm" {
+        resource_group_name = "tf_rg_blobstore"
+        storage_account_name = "tfstoragemanuelca"
+        container_name = "tfstate"
+        key = "terraform.tfstate"
+    }
+}
 
 resource "azurerm_resource_group" "tf_test" {
-    name = "tfmainrg"
+    name = "${var.envname}"
     location = "canadacentral"
 }
 
 resource "azurerm_container_group" "tfcg_test" {
-    name = "weatherapi"
+    name = "weatherapi${var.imagebuild}"
     location = azurerm_resource_group.tf_test.location
     resource_group_name = azurerm_resource_group.tf_test.name
     
@@ -40,7 +46,7 @@ resource "azurerm_container_group" "tfcg_test" {
 
     container {
         name = "weatherapi"
-        image = "manuelca/weatherapi:${var.imagebuild}"
+        image = "${var.imagename}:${var.imagebuild}"
         cpu = "1"
         memory = "1"
     

@@ -11,6 +11,7 @@ resources:
 variables:
   tag: '$(Build.BuildId)'
   imageName: 'manuelca/weatherapi'
+  envName: 'tfmainrg-'$(tag)
 
 stages:
 - stage: Build
@@ -54,6 +55,7 @@ stages:
         ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
         TF_VAR_imagebuild: $(tag)
         TF_VAR_imagename: $(imageName)
+        TF_VAR_envname: $(envName)
 - stage: RemoveEnv
   condition: eq(variables['Build.Reason'], 'Manual')
   displayName: 'Removing environment with Terraform in Azure'
